@@ -2,11 +2,14 @@ import Info from '../Info'
 import React from 'react'
 import AppContext from '../../context'
 import axios from 'axios'
+import { useCart } from '../../hooks/useCart'
 
 function Drawer({ onClose, onRemove, items = [] }) {
-const {cartItems, setCartItems} = React.useContext(AppContext)
+
 const [orderId, setOrderId] = React.useState(null)
 const [isOrderComplied, setIsOrderComplited] = React.useState(false)
+const { cartItems, setCartItems, totalPrice} = useCart();
+
 
 const onClickOrder = async () => {
   try {
@@ -72,12 +75,12 @@ const onClickOrder = async () => {
                 <li>
                   <span>Sum:</span>
                   <div></div>
-                  <b>200 EU</b>
+                  <b>{totalPrice}EU</b>
                 </li>
                 <li>
                   <span>VAT 21%:</span>
                   <div></div>
-                  <b>40 EU</b>
+                  <b>{totalPrice/ 100 * 21}EU</b>
                 </li>
               </ul>
               <button className="greenButton" onClick={onClickOrder}>Order</button>

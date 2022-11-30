@@ -31,13 +31,13 @@ function Card({ id, onFavorite, title, imageUrl, price, onPlus,
           <b>{price}</b>
         </div>
         <button className="button">
-          <img
+        {onPlus && (  <img
             width={13}
             height={13}
             src={isItemAdded(id) ? "/img/checked.svg" : "/img/plus.svg"}
             alt="Plus"
             onClick={onClickPlus}
-          />
+          />)}
         </button>
       </div>
     </div>

@@ -7,6 +7,7 @@ import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import Favorites from "./pages/Favorites";
 import AppContext from "./context";
+import Orders from "./pages/Orders";
 
 
 
@@ -19,6 +20,8 @@ function App() {
 
   React.useEffect(() => {
     async function fetchData() {
+      try {
+
       const cartResponse = await axios.get(
         "https://6374d5d408104a9c5f8aaee6.mockapi.io/Cart"
       );
@@ -31,7 +34,10 @@ function App() {
       setItems(itemsResponse.data);
       setCartItems(cartResponse.data);
       setFavorites(favoritesResponce.data);
+    } catch (error) {
+      alert ('Error')
     }
+  }
     fetchData();
   }, []);
 
@@ -81,7 +87,7 @@ function App() {
   }
 
   return (
-    <AppContext.Provider value={{cartItems, favorites, items, isItemAdded, setCartOpened}}>
+    <AppContext.Provider value={{cartItems, favorites, items, isItemAdded, setCartOpened, onAddToCart}}>
     <div className="wrapper clear">
       {cartOpened && (
         <Drawer
@@ -108,13 +114,18 @@ function App() {
             />
           }
         />
-        <Route
+              <Route
           path="/favorites"
           exact
           element={
             <Favorites onAddToFavorites={onAddToFavorites} />
-          }
-        />
+            }/>
+                 <Route
+          path="/orders"
+          exact
+          element={
+            <Orders />
+            }/>
       </Routes>
     </div>
     </AppContext.Provider>
